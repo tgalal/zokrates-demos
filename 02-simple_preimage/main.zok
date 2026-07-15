@@ -1,0 +1,10 @@
+import "hashes/sha256/sha256Padded" as sha256Padded;
+
+// A circuit has one fixed shape, so the preimage slot is always N bytes.
+// helper.py zero-pads shorter messages to fill it.
+// (THAT'S FOR SIMPLICITY, BUT DO NOT ZERO PAD IN PRACTICE)
+const u32 N = 32;
+
+def main(private u8[N] preimage) -> u32[8] {
+    return sha256Padded(preimage);
+}

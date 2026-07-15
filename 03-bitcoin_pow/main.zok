@@ -1,0 +1,10 @@
+import "hashes/sha256/sha256Padded" as varSizeSha256;
+import "hashes/sha256/256bitPadded" as fixedSizeSha256;
+
+def main(private u8[80] serialized_block_header, u32[8] block_hash) {
+
+    u32[8] hash1 = varSizeSha256(serialized_block_header);
+    u32[8] hash2 = fixedSizeSha256(hash1);
+
+    assert(hash2 == block_hash);
+}

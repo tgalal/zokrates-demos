@@ -1,0 +1,11 @@
+import "hashes/sha256/sha256Padded" as sha256Padded;
+
+// The file's length is fixed into the circuit, so it is part of the program:
+// 320 bytes here, ten times the 32 of simple_preimage. Change N and you have a
+// different circuit needing its own trusted setup -- sample.txt is refilled to
+// match, since helper.py reads N back from this line.
+const u32 N = 320;
+
+def main(private u8[N] contents) -> u32[8] {
+    return sha256Padded(contents);
+}
