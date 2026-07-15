@@ -14,12 +14,13 @@ Update path as instructed.
 ## Usage
 
 ```bash
+cd 01-workshop_example
 # compile
-zokrates compile -i root.zok
+zokrates compile -i main.zok
 # perform the setup phase
 zokrates setup
 # execute the program
-zokrates compute-witness -a 337 113569
+zokrates compute-witness -a 3
 # generate a proof of computation
 zokrates generate-proof
 # export a solidity verifier
