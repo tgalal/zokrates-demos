@@ -1,4 +1,4 @@
-def main(private field x) {
-    assert(x**3 + x + 5 == 35);
+def main(private field x) -> field {
+    return x**3 + x + 5 ;
 }
 
