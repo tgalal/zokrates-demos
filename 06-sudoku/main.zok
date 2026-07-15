@@ -1,0 +1,47 @@
+// Prove knowledge of a sudoku solution: the puzzle is public (a 0 marks a
+// blank cell), the solution stays private. Three constraint families, each a
+// standard arithmetization trick:
+//
+//   range     (s-1)(s-2)...(s-9) == 0       a product is zero iff a factor is
+//   clues     puzzle * (s - puzzle) == 0    branch-free "if clue, then equal"
+//   distinct  cells[i] != cells[j]          every pair, per row/column/box
+//
+// Cells in 1..9 plus nine pairwise-distinct cells make each group exactly
+// {1,...,9}. Distinctness alone would not be enough (nine distinct values
+// could sit outside 1..9) -- and neither is the tempting "sums to 45 and
+// multiplies to 362880" shortcut, which the multiset {1,2,4,4,4,5,7,9,9}
+// also satisfies.
+
+def all_distinct(field[9] cells) -> bool {
+    bool mut ok = true;
+    for u32 i in 0..8 {
+        for u32 j in (i + 1)..9 {
+            ok = ok && (cells[i] != cells[j]);
+        }
+    }
+    return ok;
+}
+
+def main(field[9][9] puzzle, private field[9][9] solution) {
+    for u32 r in 0..9 {
+        for u32 c in 0..9 {
+            field s = solution[r][c];
+            // range: s is one of 1..9
+            assert((s - 1) * (s - 2) * (s - 3) * (s - 4) * (s - 5) * (s - 6) * (s - 7) * (s - 8) * (s - 9) == 0);
+            // clues: a blank (0) constrains nothing, a clue forces s equal
+            assert(puzzle[r][c] * (s - puzzle[r][c]) == 0);
+        }
+    }
+    // distinct: row, column and box i each hold nine different values
+    for u32 i in 0..9 {
+        field[9] mut column = [0; 9];
+        field[9] mut box = [0; 9];
+        for u32 j in 0..9 {
+            column[j] = solution[j][i];
+            box[j] = solution[(i / 3) * 3 + (j / 3)][(i % 3) * 3 + (j % 3)];
+        }
+        assert(all_distinct(solution[i]));
+        assert(all_distinct(column));
+        assert(all_distinct(box));
+    }
+}
