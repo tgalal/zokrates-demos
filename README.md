@@ -1,4 +1,4 @@
-# ZoKrates Cheatcheat
+# ZoKrates Cheat sheet
 
 Getting Started: [https://zokrates.github.io/gettingstarted.html](https://zokrates.github.io/gettingstarted.html)
 
